@@ -49,7 +49,6 @@ int main(void)
 		{
 			readLeft();
 			readCenter();
-			readRight();
 		} // end infinite loop
 } // end main
 

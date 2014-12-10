@@ -10,7 +10,6 @@
 
 void readLeft();
 void readCenter();
-void readRight();
 void moveForward(void);
 
 

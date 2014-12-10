@@ -18,11 +18,11 @@ void readLeft()
 		bigRightTurn();
 		readLeft();
 	}
-	else if (ADC10MEM > 0x0100)
+	else if (ADC10MEM < 0x0130)
 	{
 		P1OUT |= BIT0;
 		pause();
-		bigRightTurn();
+		bigLeftTurn();
 		readLeft();
 	}
 	else
@@ -44,34 +44,10 @@ void readCenter()
 	while(ADC10CTL1 & ADC10BUSY);							// Wait for conversion to complete
 	if (ADC10MEM > 0x012A)
 	{
-		P1OUT |= BIT0 | BIT6;
-		pause();
-		bigLeftTurn();
-		readCenter();
-	}
-	else
-		{
-		P1OUT &= ~BIT0 & ~BIT6;
-		moveForward();
-		}
-}
-
-void readRight()
-{
-	//configure p1.5 to read right IR
-	ADC10CTL0 = 0;											// Turn off ADC subsystem
-	ADC10CTL1 = INCH_5 | ADC10DIV_3 ;						// Channel 5, ADC10CLK/4
-	ADC10AE0 = BIT5;		 								// Make P1.5 analog input
-	ADC10CTL0 = SREF_0 | ADC10SHT_3 | ADC10ON | ENC;		// Vcc & Vss as reference
-
-	ADC10CTL0 |= ADC10SC;									// Start a conversion
-	while(ADC10CTL1 & ADC10BUSY);							// Wait for conversion to complete
-	if (ADC10MEM > 0x01D5)
-	{
 		P1OUT |= BIT6;
 		pause();
-		bigLeftTurn();
-		readRight();
+		bigRightTurn();
+		readCenter();
 	}
 	else
 		{
@@ -79,6 +55,7 @@ void readRight()
 		moveForward();
 		}
 }
+
 
 void moveForward(void)
 {
